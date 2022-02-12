@@ -9,105 +9,81 @@ const LoginPage = styled.div`
     Form {}
 `;
 
-export default function Login() {
-  const onSubmitLogin = () => {
-    const { email } = this.state;
-    const { history, loginEmail } = this.props;
-    loginEmail(email);
-    history.push('/carteira');
-  }
+function Login(props) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [validEmail, setValidEmail] = useState(false);
+
+  const minLength = 6;
+  const isDisabled = validEmail && password.length >= minLength;
 
   const isValidEmail = () => {
-    const { email } = this.state;
     if (email.includes('@')
     && email.includes('.com')
     && !email.includes('@.com')
     && !email.includes('@@')
     ) {
-      this.setState({ validEmail: true });
+      setValidEmail(true);
     } else {
-      this.setState({ validEmail: false });
+      setValidEmail(false);
     }
   }
 
   const handleChange = (event) => {
-    this.isValidEmail();
+    isValidEmail();
     const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
+    name === "email" ? setEmail(value) : setPassword(value);
   }
 
   return (
-    <div>Login</div>
+    <Form onSubmit={
+      (e) => {
+        e.preventDefault();
+        const {history, loginEmail} = props;
+        loginEmail(email);
+        history.push('/carteira');
+      }
+    }>
+    <Form.Group
+      className="mb-3"
+    >
+      <Form.Label htmlFor="email-input">Email: </Form.Label>
+      <Form.Control
+        value={ email }
+        type="email"
+        name="email"
+        data-testid="email-input"
+        id="email-input"
+        placeholder="alguem@alguem.com"
+        required
+        onChange={ handleChange }
+      />
+    </Form.Group>
+    <Form.Group>
+      <Form.Label htmlFor="password-input">
+        Senha:
+      </Form.Label>
+      <Form.Control
+        value={ password }
+        type="password"
+        name="password"
+        data-testid="password-input"
+        id="password-input"
+        minLength="6"
+        required
+        onChange={ handleChange }
+      />
+    </Form.Group>
+    <Button
+      variant="primary"
+      type="submit"
+      disabled={ !isDisabled }
+      id="login-btn"
+    >
+      Entrar
+    </Button>
+  </Form>
   )
-}
-
-
-class Login extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: '',
-      validEmail: false,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.onSubmitLogin = this.onSubmitLogin.bind(this);
-    this.isValidEmail = this.isValidEmail.bind(this);
-  }
-
- 
-
-  render() {
-    const minLength = 6;
-    const { email, password, validEmail } = this.state;
-    const isDisabled = validEmail && password.length >= minLength;
-    return (
-      <Form>
-        <Form.Group
-          className="mb-3"
-          controlId="formBasicEmail"
-        >
-          <Form.Label htmlFor="email-input">Email: </Form.Label>
-          <Form.Control
-            value={ email }
-            type="email"
-            name="email"
-            data-testid="email-input"
-            id="email-input"
-            placeholder="alguem@alguem.com"
-            required
-            onChange={ this.handleChange }
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label htmlFor="password-input">
-            Senha:
-          </Form.Label>
-          <Form.Control
-            value={ password }
-            type="password"
-            name="password"
-            data-testid="password-input"
-            id="password-input"
-            minLength="6"
-            required
-            onChange={ this.handleChange }
-          />
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          disabled={ !isDisabled }
-          onClick={ this.onSubmitLogin }
-          id="login-btn"
-        >
-          Entrar
-        </Button>
-      </Form>
-    );
-  }
 }
 
 const mapDispatchToProps = (dispatch) => ({

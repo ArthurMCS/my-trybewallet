@@ -6,7 +6,28 @@ import styled from 'styled-components';
 import { setLoginEmail } from '../actions/actionLogin';
 
 const LoginPage = styled.div`
-    Form {}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    Form {
+      height: 400px;
+      width: 400px;
+      box-shadow: 0px 1px 15px -3px #000000;
+      border-radius: 10%;
+      margin-top: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 25px;
+      text-align: center;
+
+      button {
+        margin-top: 35px;
+        width: 230px;
+      }
+    }
 `;
 
 function Login(props) {
@@ -36,18 +57,21 @@ function Login(props) {
   }
 
   return (
-    <Form onSubmit={
+    <LoginPage>
+      <Form onSubmit={
       (e) => {
         e.preventDefault();
         const {history, loginEmail} = props;
         loginEmail(email);
         history.push('/carteira');
       }
-    }>
-    <Form.Group
+      }>
+      <Form.Group
       className="mb-3"
-    >
-      <Form.Label htmlFor="email-input">Email: </Form.Label>
+      >
+      <Form.Label htmlFor="email-input">
+        Email
+      </Form.Label>
       <Form.Control
         value={ email }
         type="email"
@@ -58,12 +82,12 @@ function Login(props) {
         required
         onChange={ handleChange }
       />
-    </Form.Group>
-    <Form.Group>
-      <Form.Label htmlFor="password-input">
-        Senha:
-      </Form.Label>
-      <Form.Control
+      </Form.Group>
+      <Form.Group>
+        <Form.Label htmlFor="password-input">
+          Senha
+        </Form.Label>
+       <Form.Control
         value={ password }
         type="password"
         name="password"
@@ -73,16 +97,17 @@ function Login(props) {
         required
         onChange={ handleChange }
       />
-    </Form.Group>
-    <Button
+      </Form.Group>
+      <Button
       variant="primary"
       type="submit"
       disabled={ !isDisabled }
       id="login-btn"
-    >
+      >
       Entrar
-    </Button>
-  </Form>
+      </Button>
+      </Form>
+    </LoginPage>
   )
 }
 

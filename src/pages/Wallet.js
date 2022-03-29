@@ -1,9 +1,61 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Table from '../components/Table';
+import { Button, Form } from 'react-bootstrap';
+import styled from 'styled-components';
+import TableComponent from '../components/Table';
 import { saveExpenses } from '../actions/actionWallet';
 import RequestCurrentPriceThunk from '../middleware';
+
+const WallerStyled = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    header {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        font-size: 25px;
+
+
+        div {
+          margin: 20px;
+        }
+
+    }
+
+    svg {
+      color: red;
+      height: 30px;
+      width: 30px;
+      cursor: pointer;
+    }
+
+    form {
+      margin-top: 50px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button {
+      margin-bottom: 30px;
+    }
+
+    .form-label {
+      margin-right: 15px;
+      margin-left: 30px;
+    }
+
+    .form-control {
+        width: 150px;
+    }
+
+`;
 
 class Wallet extends React.Component {
   constructor() {
@@ -65,29 +117,29 @@ class Wallet extends React.Component {
   renderInputs() {
     const { value, description } = this.state;
     return (
-      <form>
-        <label htmlFor="value-input">
+      <Form>
+        <Form.Label htmlFor="value-input">
           Valor:
-          <input
-            type="number"
-            name="value"
-            data-testid="value-input"
-            onChange={ this.handleChange }
-            value={ value }
-          />
-        </label>
-        <label htmlFor="description-input">
+        </Form.Label>
+        <Form.Control
+          type="number"
+          name="value"
+          data-testid="value-input"
+          onChange={ this.handleChange }
+          value={ value }
+        />
+        <Form.Label htmlFor="description-input">
           Descrição:
-          <input
-            type="text"
-            name="description"
-            data-testid="description-input"
-            onChange={ this.handleChange }
-            value={ description }
-          />
-        </label>
+        </Form.Label>
+        <Form.Control
+          type="text"
+          name="description"
+          data-testid="description-input"
+          onChange={ this.handleChange }
+          value={ description }
+        />
         {this.renderSelects()}
-      </form>
+      </Form>
     );
   }
 
@@ -95,48 +147,48 @@ class Wallet extends React.Component {
     const { currency, method, tag, currencyOptions } = this.state;
     return (
       <>
-        <label htmlFor="currency-input">
+        <Form.Label htmlFor="currency-input">
           Moeda:
-          <select
-            id="currency-input"
-            name="currency"
-            data-testid="currency-input"
-            onChange={ this.handleChange }
-            value={ currency }
-          >
-            {currencyOptions.map((coin) => <option key={ coin }>{coin}</option>)}
-          </select>
-        </label>
-        <label htmlFor="method-input">
-          Método de pagamento
-          <select
-            id="method-input"
-            name="method"
-            data-testid="method-input"
-            onChange={ this.handleChange }
-            value={ method }
-          >
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag-input">
+        </Form.Label>
+        <Form.Select
+          id="currency-input"
+          name="currency"
+          data-testid="currency-input"
+          onChange={ this.handleChange }
+          value={ currency }
+        >
+          {currencyOptions.map((coin) => <option key={ coin }>{coin}</option>)}
+        </Form.Select>
+        <Form.Label htmlFor="method-input">
+          Método de pagamento:
+        </Form.Label>
+        <Form.Select
+          id="method-input"
+          name="method"
+          data-testid="method-input"
+          onChange={ this.handleChange }
+          value={ method }
+        >
+          <option>Dinheiro</option>
+          <option>Cartão de crédito</option>
+          <option>Cartão de débito</option>
+        </Form.Select>
+        <Form.Label htmlFor="tag-input">
           Tag:
-          <select
-            id="tag-input"
-            name="tag"
-            data-testid="tag-input"
-            onChange={ this.handleChange }
-            value={ tag }
-          >
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
+        </Form.Label>
+        <Form.Select
+          id="tag-input"
+          name="tag"
+          data-testid="tag-input"
+          onChange={ this.handleChange }
+          value={ tag }
+        >
+          <option>Alimentação</option>
+          <option>Lazer</option>
+          <option>Trabalho</option>
+          <option>Transporte</option>
+          <option>Saúde</option>
+        </Form.Select>
       </>
     );
   }
@@ -151,26 +203,29 @@ class Wallet extends React.Component {
     }, 0);
 
     return (
-      <>
+      <WallerStyled>
         <header>
-          <span data-testid="email-field">{email}</span>
-          <br />
-          <span data-testid="total-field">
-            {`Despesa total: ${sumExpenses.toFixed(2)} `}
-          </span>
-          <span data-testid="header-currency-field">BRL</span>
+          <div data-testid="email-field">{email}</div>
+          <div>
+            <span data-testid="total-field">
+              {`Despesa total: ${sumExpenses.toFixed(2)} `}
+            </span>
+            <span data-testid="header-currency-field">BRL</span>
+          </div>
         </header>
-        {this.renderInputs()}
-        <button
+        <div className="inputs">
+          {this.renderInputs()}
+        </div>
+        <Button
           type="button"
           onClick={ this.onSubmitWallet }
         >
           Adicionar despesa
-        </button>
+        </Button>
         <section>
-          <Table />
+          <TableComponent />
         </section>
-      </>
+      </WallerStyled>
     );
   }
 }

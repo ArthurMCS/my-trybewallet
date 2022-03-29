@@ -15,7 +15,6 @@ function user(state = initialState, action) {
   switch (action.type) {
   case SET_LOGIN_EMAIL:
     return {
-      ...state,
       email: action.payload,
     };
   default:

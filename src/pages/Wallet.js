@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -26,7 +27,6 @@ class Wallet extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
-    this.renderSelects = this.renderSelects.bind(this);
     this.onSubmitWallet = this.onSubmitWallet.bind(this);
   }
 
@@ -65,7 +65,15 @@ class Wallet extends React.Component {
   }
 
   renderInputs() {
-    const { value, description } = this.state;
+    const {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      currencyOptions,
+    } = this.state;
+
     return (
       <Form>
         <Form.Label htmlFor="value-input">
@@ -88,19 +96,11 @@ class Wallet extends React.Component {
           onChange={ this.handleChange }
           value={ description }
         />
-        {this.renderSelects()}
-      </Form>
-    );
-  }
-
-  renderSelects() {
-    const { currency, method, tag, currencyOptions } = this.state;
-    return (
-      <>
         <Form.Label htmlFor="currency-input">
           Moeda:
         </Form.Label>
-        <Form.Select
+        <Form.Control
+          as="select"
           id="currency-input"
           name="currency"
           data-testid="currency-input"
@@ -108,11 +108,12 @@ class Wallet extends React.Component {
           value={ currency }
         >
           {currencyOptions.map((coin) => <option key={ coin }>{coin}</option>)}
-        </Form.Select>
+        </Form.Control>
         <Form.Label htmlFor="method-input">
           Método de pagamento:
         </Form.Label>
-        <Form.Select
+        <Form.Control
+          as="select"
           id="method-input"
           name="method"
           data-testid="method-input"
@@ -122,11 +123,12 @@ class Wallet extends React.Component {
           <option>Dinheiro</option>
           <option>Cartão de crédito</option>
           <option>Cartão de débito</option>
-        </Form.Select>
+        </Form.Control>
         <Form.Label htmlFor="tag-input">
           Tag:
         </Form.Label>
-        <Form.Select
+        <Form.Control
+          as="select"
           id="tag-input"
           name="tag"
           data-testid="tag-input"
@@ -138,8 +140,8 @@ class Wallet extends React.Component {
           <option>Trabalho</option>
           <option>Transporte</option>
           <option>Saúde</option>
-        </Form.Select>
-      </>
+        </Form.Control>
+      </Form>
     );
   }
 
@@ -163,7 +165,7 @@ class Wallet extends React.Component {
             <span data-testid="header-currency-field">BRL</span>
           </div>
         </header>
-        <div className="inputs">
+        <div>
           {this.renderInputs()}
         </div>
         <Button

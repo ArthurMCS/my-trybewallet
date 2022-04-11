@@ -2,60 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
-import styled from 'styled-components';
 import TableComponent from '../components/Table';
 import { saveExpenses } from '../actions/actionWallet';
 import RequestCurrentPriceThunk from '../middleware';
-
-const WallerStyled = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-
-    header {
-        display: flex;
-        align-items: center;
-        margin-top: 20px;
-        font-size: 25px;
-
-
-        div {
-          margin: 20px;
-        }
-
-    }
-
-    svg {
-      color: red;
-      height: 30px;
-      width: 30px;
-      cursor: pointer;
-    }
-
-    form {
-      margin-top: 50px;
-      margin-bottom: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    button {
-      margin-bottom: 30px;
-    }
-
-    .form-label {
-      margin-right: 15px;
-      margin-left: 30px;
-    }
-
-    .form-control {
-        width: 150px;
-    }
-
-`;
+import WalletStyled from '../styledComponents/WalletStyled';
 
 class Wallet extends React.Component {
   constructor() {
@@ -203,7 +153,7 @@ class Wallet extends React.Component {
     }, 0);
 
     return (
-      <WallerStyled>
+      <WalletStyled>
         <header>
           <div data-testid="email-field">{email}</div>
           <div>
@@ -225,7 +175,7 @@ class Wallet extends React.Component {
         <section>
           <TableComponent />
         </section>
-      </WallerStyled>
+      </WalletStyled>
     );
   }
 }

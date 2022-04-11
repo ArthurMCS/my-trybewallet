@@ -2,33 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
-import styled from 'styled-components';
 import { setLoginEmail } from '../actions/actionLogin';
+import LoginPage from '../styledComponents/LoginStyled'
 
-const LoginPage = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    Form {
-      height: 400px;
-      width: 400px;
-      box-shadow: 0px 1px 15px -3px #000000;
-      border-radius: 10%;
-      margin-top: 20%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      font-size: 25px;
-      text-align: center;
-
-      button {
-        margin-top: 35px;
-        width: 230px;
-      }
-    }
-`;
 
 function Login(props) {
   const [email, setEmail] = useState('');
@@ -39,14 +15,11 @@ function Login(props) {
   const isDisabled = validEmail && password.length >= minLength;
 
   const isValidEmail = () => {
-    if (email.includes('@')
-    && email.includes('.com')
-    && !email.includes('@.com')
-    && !email.includes('@@')
-    ) {
-      setValidEmail(true);
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)){
+      setValidEmail(false)
     } else {
-      setValidEmail(false);
+      setValidEmail(true);
     }
   }
 

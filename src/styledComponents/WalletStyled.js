@@ -6,6 +6,8 @@ align-items: center;
 justify-content: center;
 flex-direction: column;
 text-align: center;
+width: 100%;
+
 
 
 header {
@@ -13,6 +15,7 @@ header {
     align-items: center;
     margin-top: 20px;
     font-size: 25px;
+    width: inherit;
 
 
     div {
@@ -33,17 +36,23 @@ svg:hover {
   transform: scale(1.3);
 }
 
+div {
+  width: inherit;
+}
+
 
 form {
   margin-top: 50px;
-  margin-bottom: 30px;
+  width: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #454d55;
+  color: #fff;
 }
 
 button {
-  margin-bottom: 30px;
+  margin: 50px;
 }
 
 .form-label {

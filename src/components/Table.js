@@ -7,7 +7,7 @@ import { deleteExpenses } from '../actions/actionWallet';
 
 function TableComponent({ expenses, delExpenses }) {
   return (
-    <Table responsive="sm">
+    <Table triped bordered hover size="sm" variant="dark">
       <thead>
         <tr>
           <th>Descrição</th>

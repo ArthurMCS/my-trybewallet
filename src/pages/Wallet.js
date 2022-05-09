@@ -35,7 +35,8 @@ class Wallet extends React.Component {
     currentPrice();
   }
 
-  onSubmitWallet() {
+  onSubmitWallet(e) {
+    e.preventDefault();
     const { currentPrice } = this.props;
     currentPrice();
     const { id, value, description, currency, method, tag } = this.state;
@@ -75,7 +76,7 @@ class Wallet extends React.Component {
     } = this.state;
 
     return (
-      <Form>
+      <Form onSubmit={ this.onSubmitWallet }>
         <Form.Label htmlFor="value-input">
           Valor:
         </Form.Label>
@@ -93,6 +94,7 @@ class Wallet extends React.Component {
           type="text"
           name="description"
           data-testid="description-input"
+          maxlength="15"
           onChange={ this.handleChange }
           value={ description }
         />
@@ -141,6 +143,11 @@ class Wallet extends React.Component {
           <option>Transporte</option>
           <option>Saúde</option>
         </Form.Control>
+        <Button
+          type="submit"
+        >
+          Adicionar despesa
+        </Button>
       </Form>
     );
   }
@@ -168,15 +175,7 @@ class Wallet extends React.Component {
         <div>
           {this.renderInputs()}
         </div>
-        <Button
-          type="button"
-          onClick={ this.onSubmitWallet }
-        >
-          Adicionar despesa
-        </Button>
-        <section>
-          <TableComponent />
-        </section>
+        <TableComponent />
       </WalletStyled>
     );
   }

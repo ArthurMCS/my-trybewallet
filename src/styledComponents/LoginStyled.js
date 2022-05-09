@@ -17,6 +17,8 @@ const LoginPage = styled.div`
       flex-direction: column;
       font-size: 25px;
       text-align: center;
+      background: #454d55;
+      color: #fff;
 
       button {
         margin-top: 35px;
